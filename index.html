@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu amor</title>
+  <style>
+    body {
+      background: #fff0f5;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 50px;
+      color: #b03060;
+      overflow-x: hidden;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+    #timer {
+      font-size: 1.5em;
+      margin-top: 10px;
+      background: #ffe4e1;
+      display: inline-block;
+      padding: 15px 25px;
+      border-radius: 12px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+    }
+    .section {
+      margin-top: 50px;
+    }
+    img {
+      width: 250px;
+      border-radius: 12px;
+      margin: 10px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    img:hover {
+      transform: scale(1.1);
+      box-shadow: 2px 2px 15px rgba(0,0,0,0.2);
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #ff69b4;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #ff1493;
+    }
+    .heart {
+      position: absolute;
+      font-size: 2em;
+      color: #ff69b4;
+      animation: float 5s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-200px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Estamos juntos há...</h1>
+  <div id="timer">Calculando...</div>
+
+  <div class="section">
+    <h2>Nossas Memórias</h2>
+    <img src="imagens/foto1.jpg" alt="Foto 1" />
+    <img src="imagens/foto2.jpg" alt="Foto 2" />
+    <img src="imagens/foto3.jpg" alt="Foto 3" />
+    <img src="imagens/foto4.jpg" alt="Foto 4" />
+    <img src="imagens/foto5.jpg" alt="Foto 5" />
+    <img src="imagens/foto6.jpg" alt="Foto 6" />
+  </div>
+
+  <div class="section">
+    <h2>Acha que acabou? Achou errado bobinho!</h2>
+    <button onclick="mostrarMensagem()">Clique para ler</button>
+    <p id="mensagem" style="margin-top: 20px; display: none; font-size: 1.2em;"></p>
+  </div>
+
+  <script>
+    const startDate = new Date("2025-03-15T00:00:00");
+
+    function updateTimer() {
+      const now = new Date();
+      let diff = Math.floor((now - startDate) / 1000);
+
+      const years = Math.floor(diff / (365.25 * 24 * 60 * 60));
+      diff %= (365.25 * 24 * 60 * 60);
+      const months = Math.floor(diff / (30.44 * 24 * 60 * 60));
+      diff %= (30.44 * 24 * 60 * 60);
+      const days = Math.floor(diff / (24 * 60 * 60));
+      diff %= (24 * 60 * 60);
+      const hours = Math.floor(diff / 3600);
+      diff %= 3600;
+      const minutes = Math.floor(diff / 60);
+      const seconds = diff % 60;
+
+      document.getElementById("timer").textContent =
+        `${years} ano(s), ${months} mês(es), ${days} dia(s), ${hours}h ${minutes}min ${seconds}s`;
+    }
+
+    function mostrarMensagem() {
+      const msg = `Eu quero sempre ver os seus olhinhos de personagem da Pixar brilharem. Quero pra sempre ser sua melhor amiga, sua família, e seu amor. Quero cafés da manhã elaborados, e nossos hábitos de gente velha. Quero nosso fliperama, e falar que você roubou em todos os jogos que a gente jogar, por saber que você vai rir. Quero saber do seu dia e chorar no seu colo quando eu não estiver legal. Quero pra sempre o seu risoto de alho poró de duas horas pra ficar pronto e depois repetir pra você perceber que tava certo em fazer bastante. Quero sua luz nos meus dias se misturando na minha do jeito que só ela sabe. Quero você. Quero você feliz. Pra sempre. E se eu, mera mortal tentar explicar o quanto eu te amo, e o quanto eu quero isso, vou falhar miseravelmente... Então eu vou me contentar em sentir e em torcer para que todo mundo possa viver um amor assim. Eu te amo Matheus. Nessa vida, e em todas as que vierem.`;
+
+      const mensagem = document.getElementById("mensagem");
+      mensagem.textContent = "";
+      mensagem.style.display = "block";
+
+      let i = 0;
+      const velocidade = 30;
+      function digitar() {
+        if (i < msg.length) {
+          mensagem.textContent += msg.charAt(i);
+          i++;
+          setTimeout(digitar, velocidade);
+        }
+      }
+      digitar();
+    }
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.textContent = "❤️";
+      document.body.appendChild(heart);
+
+      const x = Math.random() * window.innerWidth;
+      const size = Math.random() * 20 + 20;
+      heart.style.left = `${x}px`;
+      heart.style.fontSize = `${size}px`;
+      heart.style.top = `${window.innerHeight}px`;
+
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }
+
+    setInterval(updateTimer, 1000);
+    updateTimer();
+    setInterval(createHeart, 400);
+  </script>
+</body>
+</html>
+
